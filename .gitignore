@@ -1,0 +1,8 @@
+
+node_modules/
+dist/
+.history/
+.env
+.env.local
+.env.*.local
+
