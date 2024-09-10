@@ -1,4 +1,4 @@
-let timer;
+let timer: any
 let isRunning = false;
 let seconds = 0;
 
@@ -40,9 +40,9 @@ function resetTimer() {
 
 // Check if we're on the timer page before adding event listeners
 if (document.getElementById('timer')) {
-    document.getElementById('start').addEventListener('click', startTimer);
-    document.getElementById('stop').addEventListener('click', stopTimer);
-    document.getElementById('reset').addEventListener('click', resetTimer);
+    document.getElementById('start')!.addEventListener('click', startTimer);
+    document.getElementById('stop')!.addEventListener('click', stopTimer);
+    document.getElementById('reset')!.addEventListener('click', resetTimer);
 
     // Initial display
     updateDisplay();
