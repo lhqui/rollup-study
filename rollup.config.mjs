@@ -13,16 +13,24 @@ export default {
 	output: [
 		{
 			file: 'dist/bundle.js',
+			name: 'app',
 			format: 'iife',
-			plugins: [terser()]
+			plugins: [terser()],
 		}
 	],
+	watch: {
+		include: 'public/**',
+		exclude: 'node_modules/**'
+	},
 	plugins: [
 		json(),
 		sass({ output: 'dist/style.css' }),
-		typescript({sourcemap: !production}),
+		typescript({
+			sourceMap: true,
+			tsconfig: './tsconfig.json'
+		}),
 		svelte({
-			include: 'src/**/*.svelte',
+			include: ['src/**/*.svelte', 'node_modules/svelte-routing/**/*.svelte'],
 			preprocess: autoPreprocess(),
 			onwarn: (warning, handler) => {
 				// Enforces that no distracting elements are used. 
@@ -39,7 +47,6 @@ export default {
 				//If false, no JavaScript or CSS is returned; just metadata.
 				generate: 'dom',
 				hydratable: true,
-				customElement: false
 			  }
 		}),
 		resolve({
@@ -48,9 +55,8 @@ export default {
 			extensions: ['.svelte']
 		  }),
 		serve({
-			open: true,
-			contentBase: 'dist',
-			port: 5000
+			port: 5000,
+			contentBase: ['public', 'dist']
 		})
 	]
 };

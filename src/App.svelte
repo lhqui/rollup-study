@@ -1,5 +1,15 @@
-<script lang="ts">
-  export let port: number;
+<script>
+  import { Router, Link, Route } from "svelte-routing";
+  import Home from "./pages/Home.svelte";
+
+  export let url = "";
 </script>
 
-<p>App is running on {port}</p>
+<Router {url}>
+  <nav>
+    <Link to="/">Home</Link>
+  </nav>
+  <div>
+    <Route path="/" component={Home} />
+  </div>
+</Router>
