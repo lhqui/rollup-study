@@ -12,21 +12,16 @@ export default {
 	input: 'src/main.ts',
 	output: [
 		{
-			file: 'dist/bundle.js',
+			file: 'public/dist/bundle.js',
 			name: 'app',
 			format: 'iife',
 			plugins: [terser()],
 		}
 	],
-	watch: {
-		include: 'public/**',
-		exclude: 'node_modules/**'
-	},
 	plugins: [
 		json(),
-		sass({ output: 'dist/style.css' }),
+		sass({ output: 'public/dist/style.css' }),
 		typescript({
-			sourceMap: true,
 			tsconfig: './tsconfig.json'
 		}),
 		svelte({
@@ -49,11 +44,7 @@ export default {
 				hydratable: true,
 			  }
 		}),
-		resolve({
-			browser: true,
-			exportConditions: ['svelte'],
-			extensions: ['.svelte']
-		  }),
+		resolve(),
 		serve({
 			port: 5000,
 			contentBase: ['public', 'dist']
