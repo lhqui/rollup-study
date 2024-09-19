@@ -7,6 +7,7 @@ import serve from "rollup-plugin-serve";
 import autoPreprocess from "svelte-preprocess";
 import typescript from "@rollup/plugin-typescript";
 import postcss from "rollup-plugin-postcss";
+import alias from '@rollup/plugin-alias';
 
 export default {
   input: "src/main.ts",
@@ -24,7 +25,7 @@ export default {
       tsconfig: "./tsconfig.json",
     }),
     svelte({
-      include: ["src/**/*.svelte", "node_modules/svelte-routing/**/*.svelte"],
+      include: ["src/**/*.svelte", "node_modules/**/*.svelte"],
       preprocess: autoPreprocess(),
       onwarn: (warning, handler) => {
         // Enforces that no distracting elements are used.
@@ -43,7 +44,10 @@ export default {
         hydratable: true,
       },
     }),
-    resolve(),
+    resolve({
+      browser: true,
+      exportConditions: ['svelte']
+    }),
     serve({
       port: 5000,
       contentBase: ["public", "dist"],
@@ -52,5 +56,11 @@ export default {
       extract: true,
       extract: "style.css",
     }),
+    alias({
+		entries: [
+		  { find: '$lib', replacement: './src/lib' },
+		  { find: '$lib/*', replacement: './src/lib/*' }
+		]
+	  })
   ],
 };
